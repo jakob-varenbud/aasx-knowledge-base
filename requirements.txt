@@ -1,0 +1,11 @@
+basyx-python-sdk
+pydantic
+fastapi
+uvicorn[standard]
+chromadb
+openai
+python-multipart
+python-dotenv
+pytest
+ruff
+mypy
