@@ -45,18 +45,25 @@ def _extract_semantic_id(element: model.SubmodelElement) -> str | None:
     return None
 
 
-def _element_to_text(element: model.SubmodelElement) -> str:
+def _element_to_text(
+    element: model.SubmodelElement, submodel_id_short: str | None = None
+) -> str:
     """Erzeugt einen menschenlesbaren Text für ein SubmodelElement.
 
-    Struktur: "<idShort>: <Wert> (<Beschreibung>)"
-    Verschiedene Element-Typen werden unterschiedlich behandelt:
-    - Property: einfacher Skalarwert
-    - MultiLanguageProperty: bevorzugt englischen Text, sonst erster vorhandener
-    - Range: Min-Max-Bereich
-    - File: Dateipfad innerhalb des AASX-Archivs
-    - Blob: Platzhalter mit MIME-Typ (Binärinhalt wird nicht eingebettet)
-    Die optionale description liefert zusätzlichen Kontext für das Embedding.
+    Struktur:
+      "[Submodel: <submodel_id_short> / <element_path>]"
+      "<idShort>: <Wert> (<Beschreibung>)"
+
+    Der Breadcrumb-Header gibt dem Embedding den hierarchischen Kontext,
+    damit isolierte Chunks wie "ManufacturerName: Siemens" im Retrieval
+    korrekt verortet werden können.
     """
+    path = _build_path(element)
+    if submodel_id_short:
+        header = f"[Submodel: {submodel_id_short} / {path}]"
+    else:
+        header = f"[{path}]"
+
     parts: list[str] = [element.id_short]
 
     if isinstance(element, model.Property):
@@ -76,11 +83,13 @@ def _element_to_text(element: model.SubmodelElement) -> str:
         parts.append(f": <blob {element.content_type}>")
 
     if element.description:
-        desc = element.description.get("en") or next(iter(element.description.values()), None)
+        desc = element.description.get("en") or next(
+            iter(element.description.values()), None
+        )
         if desc:
             parts.append(f" ({desc})")
 
-    return "".join(parts)
+    return f"{header}\n{''.join(parts)}"
 
 
 def parse_aasx(file_path: str | Path) -> list[AASChunk]:
@@ -121,7 +130,7 @@ def parse_aasx(file_path: str | Path) -> list[AASChunk]:
         # einschließlich verschachtelter Elemente in Collections/Lists.
         for element in walk_submodel(submodel):
             chunk = AASChunk(
-                text=_element_to_text(element),
+                text=_element_to_text(element, submodel_id_short),
                 metadata={
                     "asset_id": asset_id,
                     "submodel_id_short": submodel_id_short,
