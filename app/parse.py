@@ -34,7 +34,7 @@ def _extract_semantic_id(element: model.SubmodelElement) -> str | None:
     """Gibt die semantische ID des Elements zurück (erster Key-Wert).
 
     SemanticIDs verweisen auf standardisierte Konzepte (z.B. ECLASS, IEC CDD).
-    Sie werden als Metadatum gespeichert – nie in den Embedding-Text eingebettet,
+    Sie werden als Metadata gespeichert – nie in den Embedding-Text eingebettet,
     damit die semantische Bedeutung für strukturierte Abfragen erhalten bleibt.
     """
     if element.semantic_id is None:
@@ -130,7 +130,9 @@ def parse_aasx(file_path: str | Path) -> list[AASChunk]:
         # einschließlich verschachtelter Elemente in Collections/Lists.
         for element in walk_submodel(submodel):
             chunk = AASChunk(
-                text=_element_to_text(element, submodel_id_short),
+                text=_element_to_text(
+                    element, submodel_id_short
+                ),  # _build_path  wird in _element_to_text aufgerufen!
                 metadata={
                     "asset_id": asset_id,
                     "submodel_id_short": submodel_id_short,
