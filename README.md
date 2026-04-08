@@ -6,7 +6,7 @@ Semantic search over AASX files (Asset Administration Shell). Upload `.aasx` fil
 
 ## What is this?
 
-[AASX](https://www.plattform-i40.de/IP/Redaktion/EN/Downloads/Publikation/Details-of-the-Asset-Administration-Shell-Part1.html) is a file format for digitally describing industrial assets and components (e.g. machines, sensors, parts). This app makes those files searchable — you can ask things like *"What is the serial number of the device?"* or *"What is the rated voltage?"*
+[AASX](https://www.ipa.fraunhofer.de/de/aktuelle-forschung/kompetenzzentrum-digitale-werkzeuge-in-der-produktion/digital-twin/asset-administration-shell.html) is a file format for digitally describing industrial assets and components (e.g. machines, sensors, parts). This app makes those files searchable — you can ask things like *"What is the serial number of the device?"* or *"What is the rated voltage?"*
 
 **How it works:**
 
