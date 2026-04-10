@@ -21,6 +21,13 @@
           >
             Indexieren
           </NuxtLink>
+          <NuxtLink
+            to="/chat"
+            class="text-slate-400 hover:text-slate-200 transition-colors text-sm px-2 py-1 rounded"
+            active-class="text-slate-200"
+          >
+            Chat
+          </NuxtLink>
         </div>
 
         <div class="flex items-center gap-1.5 text-xs" :class="healthClass">

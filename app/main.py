@@ -11,6 +11,8 @@ from pydantic import BaseModel
 
 from app.embed import EMBED_MODEL, _get_collection, embed_file
 
+CHAT_MODEL = "gpt-4o-mini"
+
 # API-Key aus der .env-Datei im gleichen Ordner laden
 load_dotenv(Path(__file__).resolve().parent / ".env", override=True)
 
@@ -46,6 +48,17 @@ class IndexResponse(BaseModel):
 class HealthResponse(BaseModel):
     status: str
     chunks: int
+
+
+class ChatRequest(BaseModel):
+    message: str
+    n_results: int = 5
+    filter: dict[str, str] | None = None
+
+
+class ChatResponse(BaseModel):
+    answer: str
+    sources: list[str]
 
 
 # --- Endpunkte ---
@@ -86,6 +99,48 @@ async def query(request: QueryRequest) -> QueryResponse:
         )
     ]
     return QueryResponse(results=items)
+
+
+@app.post("/chat", response_model=ChatResponse)
+async def chat(request: ChatRequest) -> ChatResponse:
+    # Query embedden
+    embedding_response = await openai_client.embeddings.create(
+        model=EMBED_MODEL, input=request.message
+    )
+    query_embedding = embedding_response.data[0].embedding
+
+    where = request.filter if request.filter else None
+
+    collection = _get_collection()
+    results = collection.query(
+        query_embeddings=[query_embedding],
+        n_results=request.n_results,
+        where=where,
+    )
+
+    chunks = results["documents"][0]
+    context = "\n\n".join(chunks)
+
+    completion = await openai_client.chat.completions.create(
+        model=CHAT_MODEL,
+        messages=[
+            {
+                "role": "system",
+                "content": (
+                    "Du bist ein Experte für Asset Administration Shells (AAS) und AASX-Dateien. "
+                    "Beantworte die Frage ausschließlich basierend auf dem folgenden Kontext aus der Wissensdatenbank. "
+                    "Wenn die Antwort nicht im Kontext enthalten ist, sage das klar.\n\n"
+                    f"Kontext:\n{context}"
+                ),
+            },
+            {"role": "user", "content": request.message},
+        ],
+    )
+
+    return ChatResponse(
+        answer=completion.choices[0].message.content or "",
+        sources=chunks,
+    )
 
 
 @app.post("/index", response_model=IndexResponse)
