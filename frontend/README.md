@@ -1,75 +1,33 @@
-# Nuxt Minimal Starter
+# AASX Knowledge Base — Frontend
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Nuxt 3 frontend for the AASX Knowledge Base. Proxies all `/api/**` requests to the FastAPI backend at `http://localhost:8000`.
+
+## Pages
+
+| Route | Description |
+|-------|-------------|
+| `/` | Semantic search — raw chunk results with distances |
+| `/chat` | RAG chat interface — ask questions in natural language |
+| `/upload` | Upload and index `.aasx` files |
 
 ## Setup
 
-Make sure to install dependencies:
-
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+## Development
 
-Start the development server on `http://localhost:3000`:
+Make sure the backend is running first (`uvicorn app.main:app --reload`), then:
 
 ```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+# available at http://localhost:3000
 ```
 
-## Production
-
-Build the application for production:
+## Build
 
 ```bash
-# npm
 npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
 npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

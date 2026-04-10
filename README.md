@@ -13,7 +13,7 @@ Semantic search over AASX files (Asset Administration Shell). Upload `.aasx` fil
 ```
 .aasx file → Parse → Chunks → OpenAI Embeddings → Chroma (local)
                                                         ↓
-                                        Nuxt 3 Frontend → FastAPI → Search result
+                                        Nuxt 3 Frontend → FastAPI → Search / Chat result
 ```
 
 ---
@@ -90,7 +90,8 @@ python -m app.embed my-file.aasx
 | Method | Path | Description |
 |--------|------|-------------|
 | `GET` | `/health` | Status and number of indexed chunks |
-| `POST` | `/query` | Semantic search |
+| `POST` | `/query` | Semantic search — returns raw chunks with distances |
+| `POST` | `/chat` | RAG chat — returns an LLM answer with sources |
 | `POST` | `/index` | Upload and index an AASX file |
 
 **Example query:**
@@ -98,6 +99,13 @@ python -m app.embed my-file.aasx
 curl -X POST http://localhost:8000/query \
   -H "Content-Type: application/json" \
   -d '{"query": "serial number", "n_results": 3}'
+```
+
+**Example chat:**
+```bash
+curl -X POST http://localhost:8000/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Wie hoch ist die Temperatur?", "n_results": 5}'
 ```
 
 ---
@@ -109,13 +117,14 @@ curl -X POST http://localhost:8000/query \
 ├── app/
 │   ├── parse.py        # AASX → list of AASChunks (via BaSyx SDK)
 │   ├── embed.py        # Chunks → OpenAI Embeddings → Chroma
-│   └── main.py         # FastAPI: /health, /query, /index
+│   └── main.py         # FastAPI: /health, /query, /chat, /index
 ├── frontend/
 │   └── app/
-│       ├── app.vue         # Layout + health badge
+│       ├── app.vue         # Layout + health badge + navigation
 │       └── pages/
-│           ├── index.vue   # Search interface
-│           └── upload.vue  # File upload
+│           ├── index.vue   # Semantic search interface
+│           ├── chat.vue    # RAG chat interface
+│           └── upload.vue  # File upload / indexing
 ├── chroma_data/        # local vector store (created automatically)
 └── requirements.txt
 ```
