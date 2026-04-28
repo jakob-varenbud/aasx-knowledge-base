@@ -27,7 +27,7 @@ def _chunk_id(chunk: AASChunk) -> str:
     # Erzeugt eine eindeutige ID für jeden Chunk aus asset_id + element_path.
     # SHA-256 liefert immer einen gleich langen String – egal wie lang die Eingabe ist.
     # Gleicher Chunk → gleiche ID → Chroma überschreibt statt doppelt zu speichern.
-    key = f"{chunk.metadata.get('asset_id')}::{chunk.metadata.get('element_path')}"
+    key = f"{chunk.metadata.get('asset_id')}::{chunk.metadata.get('submodel_id_short')}::{chunk.metadata.get('element_path')}"
     return hashlib.sha256(key.encode()).hexdigest()
 
 

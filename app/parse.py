@@ -46,20 +46,25 @@ def _extract_semantic_id(element: model.SubmodelElement) -> str | None:
 
 
 def _element_to_text(
-    element: model.SubmodelElement, submodel_id_short: str | None = None
+    element: model.SubmodelElement,
+    submodel_id_short: str | None = None,
+    asset_id: str | None = None,
+    asset_label: str | None = None,
 ) -> str:
     """Erzeugt einen menschenlesbaren Text für ein SubmodelElement.
 
     Struktur:
-      "[Submodel: <submodel_id_short> / <element_path>]"
+      "[Asset: <asset_label> | Submodel: <submodel_id_short> / <element_path>]"
       "<idShort>: <Wert> (<Beschreibung>)"
 
-    Der Breadcrumb-Header gibt dem Embedding den hierarchischen Kontext,
-    damit isolierte Chunks wie "ManufacturerName: Siemens" im Retrieval
-    korrekt verortet werden können.
+    asset_label ist ein menschenlesbarer Name (z.B. "DMG Mori DMU 50"),
+    der Vorrang vor der rohen asset_id hat.
     """
     path = _build_path(element)
-    if submodel_id_short:
+    label = asset_label or asset_id
+    if label and submodel_id_short:
+        header = f"[Asset: {label} | Submodel: {submodel_id_short} / {path}]"
+    elif submodel_id_short:
         header = f"[Submodel: {submodel_id_short} / {path}]"
     else:
         header = f"[{path}]"
@@ -118,6 +123,40 @@ def parse_aasx(file_path: str | Path) -> list[AASChunk]:
             asset_id = str(item.id)
             break
 
+    # Menschenlesbaren Asset-Namen aus dem Nameplate-Submodel zusammensetzen.
+    # Sucht explizit nach einem Submodel dessen id_short "Nameplate" enthält,
+    # damit Felder wie ManufacturerName aus anderen Submodels nicht fälschlicherweise
+    # verwendet werden. Ergebnis z.B. "DMG Mori DMU 50 3rd Generation".
+    asset_label: str | None = None
+    nameplate_submodels = [
+        item for item in object_store
+        if isinstance(item, model.Submodel) and "nameplate" in (item.id_short or "").lower()
+    ]
+    # Fallback: alle Submodels durchsuchen wenn kein Nameplate gefunden
+    search_submodels = nameplate_submodels or [
+        item for item in object_store if isinstance(item, model.Submodel)
+    ]
+    for item in search_submodels:
+        nameplate_fields: dict[str, str] = {}
+        for element in walk_submodel(item):
+            if isinstance(element, model.Property) and element.value is not None:
+                nameplate_fields[element.id_short] = str(element.value)
+            elif isinstance(element, model.MultiLanguageProperty) and element.value:
+                val = element.value.get("en") or next(iter(element.value.values()), None)
+                if val:
+                    nameplate_fields[element.id_short] = val
+        manufacturer = nameplate_fields.get("ManufacturerName")
+        designation = nameplate_fields.get("ManufacturerProductDesignation")
+        if manufacturer and designation:
+            asset_label = f"{manufacturer} {designation}"
+            break
+        elif designation:
+            asset_label = designation
+            break
+        elif manufacturer:
+            asset_label = manufacturer
+            break
+
     chunks: list[AASChunk] = []
 
     for submodel in object_store:
@@ -131,8 +170,8 @@ def parse_aasx(file_path: str | Path) -> list[AASChunk]:
         for element in walk_submodel(submodel):
             chunk = AASChunk(
                 text=_element_to_text(
-                    element, submodel_id_short
-                ),  # _build_path  wird in _element_to_text aufgerufen!
+                    element, submodel_id_short, asset_id, asset_label
+                ),
                 metadata={
                     "asset_id": asset_id,
                     "submodel_id_short": submodel_id_short,
