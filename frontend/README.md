@@ -6,9 +6,9 @@ Nuxt 3 frontend for the AASX Knowledge Base. Proxies all `/api/**` requests to t
 
 | Route | Description |
 |-------|-------------|
-| `/` | Semantic search — raw chunk results with distances |
-| `/chat` | RAG chat interface — ask questions in natural language |
-| `/upload` | Upload and index `.aasx` files |
+| `/` | Semantic search — raw chunk results with similarity distances |
+| `/chat` | RAG chat — ask questions in natural language, answered by `gpt-4o-mini` with source chunks |
+| `/upload` | Upload and index `.aasx` files into the local Chroma vector store |
 
 ## Setup
 

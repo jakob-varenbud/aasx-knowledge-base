@@ -16,6 +16,15 @@ Semantic search over AASX files (Asset Administration Shell). Upload `.aasx` fil
                                         Nuxt 3 Frontend → FastAPI → Search / Chat result
 ```
 
+Every chunk carries a human-readable breadcrumb, e.g.:
+
+```
+[Asset: DMG Mori DMU 50 3rd Generation | Submodel: Nameplate / ManufacturerName]
+ManufacturerName: DMG Mori
+```
+
+The asset name is derived from the `ManufacturerName` and `ManufacturerProductDesignation` fields in the Nameplate submodel, so the LLM always knows which machine a value belongs to.
+
 ---
 
 ## Requirements
@@ -115,15 +124,15 @@ curl -X POST http://localhost:8000/chat \
 ```
 .
 ├── app/
-│   ├── parse.py        # AASX → list of AASChunks (via BaSyx SDK)
-│   ├── embed.py        # Chunks → OpenAI Embeddings → Chroma
+│   ├── parse.py        # AASX → list of AASChunks (via BaSyx SDK); builds human-readable breadcrumbs
+│   ├── embed.py        # Chunks → OpenAI Embeddings → Chroma (idempotent upsert via SHA-256 IDs)
 │   └── main.py         # FastAPI: /health, /query, /chat, /index
 ├── frontend/
 │   └── app/
 │       ├── app.vue         # Layout + health badge + navigation
 │       └── pages/
 │           ├── index.vue   # Semantic search interface
-│           ├── chat.vue    # RAG chat interface
+│           ├── chat.vue    # RAG chat interface (gpt-4o-mini)
 │           └── upload.vue  # File upload / indexing
 ├── chroma_data/        # local vector store (created automatically)
 └── requirements.txt
