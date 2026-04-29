@@ -1,4 +1,4 @@
-# AASX Knowledge Base
+# AASX Knowledge Base RAG system
 
 > 🚧 **Active development.** Containerization  is in progress. And following Cloud deployment (AWS ECS + EFS), CI/CD, and test suite are planned. See [Roadmap](#roadmap) below.
 
