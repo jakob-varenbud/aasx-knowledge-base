@@ -36,7 +36,7 @@ SerialNumber: SN-2024-CNC-0042 (Unique serial number assigned to this machine in
 MaxSpindleSpeed: 18000 (Maximum spindle rotation speed in revolutions per minute (rpm). Exceeding this value triggers a safety stop.)
 ```
 
-The asset name (`DMG Mori DMU 50 3rd Generation`) is built from the `ManufacturerName` and `ManufacturerProductDesignation` fields of the Nameplate submodel — so a question like *"What is the max spindle speed of the DMU 50?"* can be matched to the right machine even when multiple assets are indexed.
+So a question like *"What is the max spindle speed of the DMU 50?"* can be matched to the right machine even when multiple assets are indexed.
 
 ---
 
