@@ -1,5 +1,9 @@
 # AASX Knowledge Base
 
+> 🚧 **Active development.** Cloud deployment (AWS ECS + EFS), CI/CD, and test suite are in progress. See [Roadmap](#roadmap) below.
+
+Licensed under Apache-2.0 — see [LICENSE](LICENSE).
+
 Semantic search over AASX files (Asset Administration Shell). Upload `.aasx` files, and they get automatically parsed into searchable chunks, embedded via OpenAI, and stored in a local vector database. You can then search in plain language through a web interface.
 
 ---
@@ -48,8 +52,9 @@ pip install -r requirements.txt
 ### 2. Configure the API key
 
 ```bash
-# Create the .env file inside the app/ directory:
-echo "OPENAI_API_KEY=sk-..." > app/.env
+# Copy the template and fill in your key:
+cp app/.env.example app/.env
+# then edit app/.env and set OPENAI_API_KEY=sk-...
 ```
 
 ### 3. Install frontend dependencies
@@ -84,12 +89,14 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Indexing an AASX file
 
+A sample file is included under [`examples/Cnc_1.aasx`](examples/Cnc_1.aasx) so you can try the pipeline without bringing your own data.
+
 **Option A – Web interface:**
-Go to *Indexieren*, and upload an `.aasx` file.
+Open [http://localhost:3000/upload](http://localhost:3000/upload) and upload an `.aasx` file.
 
 **Option B – Command line:**
 ```bash
-python -m app.embed my-file.aasx
+python -m app.embed examples/Cnc_1.aasx
 ```
 
 ---
@@ -114,7 +121,7 @@ curl -X POST http://localhost:8000/query \
 ```bash
 curl -X POST http://localhost:8000/chat \
   -H "Content-Type: application/json" \
-  -d '{"message": "Wie hoch ist die Temperatur?", "n_results": 5}'
+  -d '{"message": "What is the manufacturer of this machine?", "n_results": 5}'
 ```
 
 ---
@@ -143,9 +150,6 @@ curl -X POST http://localhost:8000/chat \
 ## Development
 
 ```bash
-# Run tests
-pytest -v --tb=short
-
 # Lint & type check
 ruff check . && mypy app/
 
@@ -164,3 +168,18 @@ ruff format .
 | Embeddings | OpenAI `text-embedding-3-small` |
 | Vector store | Chroma (local, persistent) |
 | Frontend | Nuxt 3 + Tailwind CSS |
+
+---
+
+## Roadmap
+
+- [ ] Containerization (Dockerfile + docker-compose)
+- [ ] Cloud deployment on AWS (ECS Fargate + EFS for Chroma + S3/CloudFront for the frontend)
+- [ ] API-key protection on `/index` + `DEMO_MODE` for the live demo
+- [ ] CORS config + frontend runtime config (`NUXT_PUBLIC_API_BASE`)
+- [ ] CI (GitHub Actions: ruff + mypy + pytest)
+- [ ] Test suite (`tests/` with FastAPI TestClient + OpenAI mocks)
+- [ ] Architecture diagram (Mermaid) + screenshots in README
+- [ ] Pinned dependencies + `pyproject.toml`
+- [ ] CONTRIBUTING.md + CODE_OF_CONDUCT.md
+- [ ] Scripted demo-AAS generator (BaSyx SDK) for fully self-authored sample data
