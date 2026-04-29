@@ -6,6 +6,10 @@ Licensed under Apache-2.0 — see [LICENSE](LICENSE).
 
 Semantic search over AASX files (Asset Administration Shell). Upload `.aasx` files, and they get automatically parsed into searchable chunks, embedded via OpenAI, and stored in a local vector database. You can then search in plain language through a web interface.
 
+<p align="center">
+  <img src="docs/screenshots/chat.png" alt="RAG chat answering a question about the indexed CNC machine" width="800">
+</p>
+
 ---
 
 ## What is this?
