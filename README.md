@@ -140,7 +140,7 @@ curl -X POST http://localhost:8000/query \
 ```bash
 curl -X POST http://localhost:8000/chat \
   -H "Content-Type: application/json" \
-  -d '{"message": "What is the manufacturer of this machine?", "n_results": 5}'
+  -d '{"message": "What is the serial number of the DMU 50 machine?", "n_results": 5}'
 ```
 
 ---
