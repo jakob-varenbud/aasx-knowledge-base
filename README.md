@@ -20,14 +20,19 @@ Semantic search over AASX files (Asset Administration Shell). Upload `.aasx` fil
                                         Nuxt 3 Frontend → FastAPI → Search / Chat result
 ```
 
-Every chunk carries a human-readable breadcrumb, e.g.:
+Each chunk gets a breadcrumb so the LLM always knows which machine and submodel a value comes from. Two real chunks from [`examples/Cnc_1.aasx`](examples/Cnc_1.aasx):
 
 ```
-[Asset: DMG Mori DMU 50 3rd Generation | Submodel: Nameplate / ManufacturerName]
-ManufacturerName: DMG Mori
+[Asset: DMG Mori DMU 50 3rd Generation | Submodel: Nameplate / SerialNumber]
+SerialNumber: SN-2024-CNC-0042 (Unique serial number assigned to this machine instance at the factory.)
 ```
 
-The asset name is derived from the `ManufacturerName` and `ManufacturerProductDesignation` fields in the Nameplate submodel, so the LLM always knows which machine a value belongs to.
+```
+[Asset: DMG Mori DMU 50 3rd Generation | Submodel: TechnicalData / MaxSpindleSpeed]
+MaxSpindleSpeed: 18000 (Maximum spindle rotation speed in revolutions per minute (rpm). Exceeding this value triggers a safety stop.)
+```
+
+The asset name (`DMG Mori DMU 50 3rd Generation`) is built from the `ManufacturerName` and `ManufacturerProductDesignation` fields of the Nameplate submodel — so a question like *"What is the max spindle speed of the DMU 50?"* can be matched to the right machine even when multiple assets are indexed.
 
 ---
 
