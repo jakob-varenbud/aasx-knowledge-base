@@ -195,6 +195,6 @@ curl -X POST http://localhost:8000/chat \
 
 ## Commercial use & collaboration
 
-This project is open source under Apache-2.0 — you are free to use, fork, and adapt it.
+This project is open source under Apache-2.0. You are free to use, fork, and adapt it.
 
 If you're considering using it in a commercial context or would like to collaborate, I'd love to hear about it: [jakobvarenbud@gmail.com](mailto:jakobvarenbud@gmail.com)
