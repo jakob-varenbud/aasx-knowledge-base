@@ -183,3 +183,11 @@ ruff format .
 - [ ] Pinned dependencies + `pyproject.toml`
 - [ ] CONTRIBUTING.md + CODE_OF_CONDUCT.md
 - [ ] Scripted demo-AAS generator (BaSyx SDK) for fully self-authored sample data
+
+---
+
+## Commercial use & collaboration
+
+This project is open source under Apache-2.0 — you are free to use, fork, and adapt it.
+
+If you're considering using it in a commercial context or would like to collaborate, I'd love to hear about it: [jakobvarenbud@gmail.com](mailto:jakobvarenbud@gmail.com)
