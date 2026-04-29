@@ -15,7 +15,7 @@ Semantic search over AASX files (Asset Administration Shell). Upload `.aasx` fil
    those files searchable via natural language through a RAG system.
    
    Instead of flipping through manuals, ask: "What is the serial 
-   number of device XYZ?" or "What is the recommended temperature?" 
+   number of device XYZ?" or "What is the recommended temperature for the device XYZ?" 
    The AI understands semantically and finds answers instantly 
    across all your machines.
    
