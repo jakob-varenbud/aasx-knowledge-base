@@ -6,15 +6,15 @@ Licensed under Apache-2.0 — see [LICENSE](LICENSE).
 
 Semantic search over AASX files (Asset Administration Shell). Upload `.aasx` files, and they get automatically parsed into searchable chunks, embedded via OpenAI, and stored in a local vector database. You can then search in plain language through a web interface.
 
-<p align="center">
-  <img src="docs/screenshots/chat.png" alt="RAG chat answering a question about the indexed CNC machine" width="800">
-</p>
-
 ---
 
 ## What is this?
 
-[AASX](https://industrialdigitaltwin.io/aas-specifications/IDTA-01001/v3.1.2/spec-metamodel/core.html#aas_attributes) is a file format for digitally describing industrial assets and components (e.g. machines, sensors, parts). This app makes those files searchable — you can ask things like *"What is the serial number of the device?"* or *"What is the recommended temperature of device XYZ?"*
+[AASX](https://industrialdigitaltwin.io/aas-specifications/IDTA-01001/v3.1.2/spec-metamodel/core.html#aas_attributes) is a file format for digitally describing industrial assets and components (e.g. machines, sensors, parts). This app makes those files searchable — you can ask things like *"What is the serial number of the device XYZ?"* or *"What is the recommended temperature of device XYZ?"*
+
+<p align="center">
+  <img src="docs/screenshots/chat.png" alt="RAG chat answering a question about the indexed CNC machine" width="800">
+</p>
 
 **How it works:**
 
