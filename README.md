@@ -132,7 +132,7 @@ curl -X POST http://localhost:8000/chat \
 .
 ├── app/
 │   ├── parse.py        # AASX → list of AASChunks (via BaSyx SDK); builds human-readable breadcrumbs
-│   ├── embed.py        # Chunks → OpenAI Embeddings → Chroma (idempotent upsert via SHA-256 IDs)
+│   ├── embed.py        # Chunks → OpenAI Embeddings → Chroma 
 │   └── main.py         # FastAPI: /health, /query, /chat, /index
 ├── frontend/
 │   └── app/
