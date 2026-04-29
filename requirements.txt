@@ -6,6 +6,4 @@ chromadb
 openai
 python-multipart
 python-dotenv
-pytest
-ruff
-mypy
+
