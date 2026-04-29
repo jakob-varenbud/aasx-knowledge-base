@@ -12,7 +12,7 @@ Semantic search over AASX files (Asset Administration Shell). Upload `.aasx` fil
 
 [AASX](https://industrialdigitaltwin.io/aas-specifications/IDTA-01001/v3.1.2/spec-metamodel/core.html#aas_attributes) iis a file format for digitally describing industrial assets 
    and components (e.g. machines, sensors, parts). This app makes 
-   those files searchable via natural language.
+   those files searchable via natural language through a RAG system.
    
    Instead of flipping through manuals, ask: "What is the serial 
    number of device XYZ?" or "What is the recommended temperature?" 
