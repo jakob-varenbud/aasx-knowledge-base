@@ -10,7 +10,17 @@ Semantic search over AASX files (Asset Administration Shell). Upload `.aasx` fil
 
 ## What is this?
 
-[AASX](https://industrialdigitaltwin.io/aas-specifications/IDTA-01001/v3.1.2/spec-metamodel/core.html#aas_attributes) is a file format for digitally describing industrial assets and components (e.g. machines, sensors, parts). This app makes those files searchable — you can ask things like *"What is the serial number of the device XYZ?"* or *"What is the recommended temperature of device XYZ?"* Instead of flipping through manuals, you can ask questions in natural language — the AI understands what you mean semantically and finds the right answer instantly across all your machines, enabling intelligent knowledge management that's essential for Industry 4.0 in a digital twin context.
+[AASX](https://industrialdigitaltwin.io/aas-specifications/IDTA-01001/v3.1.2/spec-metamodel/core.html#aas_attributes) iis a file format for digitally describing industrial assets 
+   and components (e.g. machines, sensors, parts). This app makes 
+   those files searchable via natural language.
+   
+   Instead of flipping through manuals, ask: "What is the serial 
+   number of device XYZ?" or "What is the recommended temperature?" 
+   The AI understands semantically and finds answers instantly 
+   across all your machines.
+   
+   Enables intelligent knowledge management essential for Industry 4.0 
+   and digital twin contexts.
 
 <p align="center">
   <img src="docs/screenshots/chat.png" alt="RAG chat answering a question about the indexed CNC machine" width="800">
