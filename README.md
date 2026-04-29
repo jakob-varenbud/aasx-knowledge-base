@@ -1,6 +1,6 @@
 # AASX Knowledge Base
 
-> 🚧 **Active development.** Cloud deployment (AWS ECS + EFS), CI/CD, and test suite are in progress. See [Roadmap](#roadmap) below.
+> 🚧 **Active development.** Containerization  is in progress. And following Cloud deployment (AWS ECS + EFS), CI/CD, and test suite are planned. See [Roadmap](#roadmap) below.
 
 Licensed under Apache-2.0 — see [LICENSE](LICENSE).
 
