@@ -147,18 +147,6 @@ curl -X POST http://localhost:8000/chat \
 
 ---
 
-## Development
-
-```bash
-# Lint & type check
-ruff check . && mypy app/
-
-# Format
-ruff format .
-```
-
----
-
 ## Stack
 
 | Component | Technology |
