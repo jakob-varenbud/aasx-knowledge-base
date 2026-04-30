@@ -11,7 +11,7 @@ Semantic search over AASX files (Asset Administration Shell). Upload `.aasx` fil
 ## What is this?
 
 [AASX](https://industrialdigitaltwin.io/aas-specifications/IDTA-01001/v3.1.2/spec-metamodel/core.html#aas_attributes) is a stanradized file format for digitally describing industrial assets  and components (e.g. machines, sensors, parts) 
-invented by the Industrial Digital Twin Association and the Frauenhofer IESE. AASX is widely used in the Industrial Digital Twin ecosystem, including frameworks such as [Eclipse BaSyx](https://github.com/eclipse-basyx/basyx).
+invented by the Industrial Digital Twin Association and the Frauenhofer IESE. AASX is widely used in the Industrial Digital Twin ecosystem, including frameworks such as [Eclipse BaSyx](https://github.com/eclipse-basyx).
 This app makes those files searchable via natural language through a RAG system.
    
    Instead of flipping through manuals, ask: "What is the serial 
