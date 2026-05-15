@@ -1,0 +1,34 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Git
+.git/
+.gitignore
+
+# Frontend
+frontend/
+
+# Data
+chroma_data/
+
+# Secrets
+app/.env
+.env
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Docs
+README.md
+LICENSE
+docs/
+examples/
