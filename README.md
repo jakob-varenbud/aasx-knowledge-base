@@ -1,4 +1,4 @@
-# AASX Knowledge Base
+# AASX Knowledge Base 
 
 > 🚧 **Active development.** Containerization  is in progress. And following Cloud deployment (AWS ECS + EFS), CI/CD, and test suite are planned. See [Roadmap](#roadmap) below.
 
@@ -6,15 +6,25 @@ Licensed under Apache-2.0 — see [LICENSE](LICENSE).
 
 Semantic search over AASX files (Asset Administration Shell). Upload `.aasx` files, and they get automatically parsed into searchable chunks, embedded via OpenAI, and stored in a local vector database. You can then search in plain language through a web interface.
 
-<p align="center">
-  <img src="docs/screenshots/chat.png" alt="RAG chat answering a question about the indexed CNC machine" width="800">
-</p>
-
 ---
 
 ## What is this?
 
-[AASX](https://industrialdigitaltwin.io/aas-specifications/IDTA-01001/v3.1.2/spec-metamodel/core.html#aas_attributes) is a file format for digitally describing industrial assets and components (e.g. machines, sensors, parts). This app makes those files searchable — you can ask things like *"What is the serial number of the device?"* or *"What is the recommended temperature of device XYZ?"*
+[AASX](https://industrialdigitaltwin.io/aas-specifications/IDTA-01001/v3.1.2/spec-metamodel/core.html#aas_attributes) is a stanradized file format for digitally describing industrial assets  and components (e.g. machines, sensors, parts) 
+invented by the Industrial Digital Twin Association and the Frauenhofer IESE. AASX is widely used in the Industrial Digital Twin ecosystem, including frameworks such as [Eclipse BaSyx](https://github.com/eclipse-basyx).
+This app makes those files searchable via natural language through a RAG system.
+   
+   Instead of flipping through manuals, ask: "What is the serial 
+   number of device XYZ?" or "What is the recommended temperature for the device XYZ?" 
+   The AI understands semantically and finds answers instantly 
+   across all your machines.
+   
+   Enables intelligent knowledge management essential for Industry 4.0 
+   and digital twin contexts.
+
+<p align="center">
+  <img src="docs/screenshots/chat.png" alt="RAG chat answering a question about the indexed CNC machine" width="800">
+</p>
 
 **How it works:**
 
@@ -130,7 +140,7 @@ curl -X POST http://localhost:8000/query \
 ```bash
 curl -X POST http://localhost:8000/chat \
   -H "Content-Type: application/json" \
-  -d '{"message": "What is the manufacturer of this machine?", "n_results": 5}'
+  -d '{"message": "What is the serial number of the DMU 50 machine?", "n_results": 5}'
 ```
 
 ---
@@ -185,6 +195,6 @@ curl -X POST http://localhost:8000/chat \
 
 ## Commercial use & collaboration
 
-This project is open source under Apache-2.0 — you are free to use, fork, and adapt it.
+This project is open source under Apache-2.0. You are free to use, fork, and adapt it.
 
 If you're considering using it in a commercial context or would like to collaborate, I'd love to hear about it: [jakobvarenbud@gmail.com](mailto:jakobvarenbud@gmail.com)
