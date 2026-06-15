@@ -1,0 +1,31 @@
+services:
+  frontend: 
+    build: 
+      context: . 
+      dockerfile: Dockerfile.frontend
+    ports: 
+    - "3000:80"
+    depends_on: 
+    - backend 
+    healthcheck: 
+      test: ["CMD", "node", "-e", fetch("http//localhost:80").then(r => process.exit(r.ok ? 0:1)).catch(() => process.exit(1))] 
+      interval: 30s 
+      timeout: 5s
+      retries: 3
+      start_period: 10s 
+  backend:
+    build: 
+      context: .
+      dockerfile: Dockerfile.backend
+    ports: 
+    - "8000:8000"
+    env_file: 
+     - app/.env 
+    volumes: 
+    - chroma_data:/code/chroma_data
+    healthcheck: 
+      test: ["CMD", "python","-c", 'import urlib.request; urlib.request.urlopen("http://localhost:8000/health")']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s 
