@@ -1,6 +1,6 @@
 # AASX Knowledge Base 
 
-> 🚧 **Active development.** Containerization  is in progress. And following Cloud deployment (AWS ECS + EFS), CI/CD, and test suite are planned. See [Roadmap](#roadmap) below.
+> 🚧 **Active development.** Containerization  is in progress. And following deployment, CI/CD, and test suite are planned. See [Roadmap](#roadmap) below.
 
 Licensed under Apache-2.0 — see [LICENSE](LICENSE).
 
@@ -181,7 +181,7 @@ curl -X POST http://localhost:8000/chat \
 ## Roadmap
 
 - [ ] Containerization (Dockerfile + docker-compose)
-- [ ] Cloud deployment on AWS (ECS Fargate + EFS for Chroma + S3/CloudFront for the frontend)
+- [ ] Deployment 
 - [ ] API-key protection on `/index` + `DEMO_MODE` for the live demo
 - [ ] CORS config + frontend runtime config (`NUXT_PUBLIC_API_BASE`)
 - [ ] CI (GitHub Actions: ruff + mypy + pytest)
