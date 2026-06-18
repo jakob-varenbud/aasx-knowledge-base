@@ -8,6 +8,8 @@ RUN npm ci
 
 # Build the Nuxt app
 COPY frontend/ ./
+ARG API_PROXY_TARGET=http://localhost:8000
+ENV API_PROXY_TARGET=$API_PROXY_TARGET
 RUN npm run build
 
 # Runtime stage
